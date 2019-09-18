@@ -8,6 +8,9 @@ import org.jsoup.select.Elements
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManager
@@ -69,13 +72,25 @@ class DCWebParser {
         override fun doInBackground(vararg url: String?): ArrayList<PostMeta>? {
             try {
                 val document = Jsoup.connect(url[0]).sslSocketFactory(socketFactory()).get()
-                val posts = document.select(".ub-content us-post")
+                val posts = document.select("tr.us-post")
 
                 for(i in 0 until posts.size) {
                     val aPost = posts[i]
-                    val title = aPost.getElementsByTag("a").text()
 
-                    Log.e("PARSER", title)
+                    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    val postDate = formatter.parse(aPost.getElementsByClass("gall_date").text())
+
+                    // Make Post Struct.
+                    val postMeta = PostMeta(
+                        title = aPost.getElementsByTag("a").text(),             // title
+                        uuid = aPost.getElementsByClass("gall_num").text(),    // uuid
+                        url = aPost.getElementById("a").attr("href"),
+                        writer = aPost.getElementsByClass("ub-writer").attr("data-nick"),
+                        date = postDate,
+                        viewCount = aPost.getElementsByClass("gall_count").text().toInt()
+                    )
+
+                    Log.e("Parse", postMeta.title)
                 }
             } catch(ex: Exception) {
                 ex.printStackTrace()

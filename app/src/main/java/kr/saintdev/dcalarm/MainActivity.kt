@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val parser = DCWebParser.getInstance()
-        parser.ParseGallery("http://gall.dcinside.com/mgallery/board/lists/?id=kizunaai", object : DCWebParser.OnDCGalleryParsedListener {
+        parser.ParseGallery("http://gall.dcinside.com/mgallery/board/lists/?id=bang_dream", object : DCWebParser.OnDCGalleryParsedListener {
             override fun onSuccess(document: ArrayList<PostMeta>) {
 
             }
