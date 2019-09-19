@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DCAlarm</string>
+
+    <string name="add_gallery_title">새 갤러리 추가</string>
+    <string name="add_gallery_from_uuid">ID 값으로 추가</string>
+    <string name="add_gallery_from_web">브라우저로 찾기</string>
 </resources>

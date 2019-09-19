@@ -3,18 +3,32 @@ package kr.saintdev.dcalarm.modules.parser
 import android.os.AsyncTask
 import android.util.Log
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.select.Elements
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
+
+/**
+ * DC INSIDE WEB PARSER CLASS.
+ * USE
+ *
+ *
+val parser = DCWebParser.getInstance()
+parser.ParseGallery("http://gall.dcinside.com/mgallery/board/lists/?id=bang_dream", object : DCWebParser.OnDCGalleryParsedListener {
+override fun onSuccess(posts: ArrayList<PostMeta>) {
+
+}
+
+override fun onFailed() {
+}
+})
+
+ *
+ */
 
 class DCWebParser {
     companion object {
@@ -33,7 +47,7 @@ class DCWebParser {
      */
     interface OnDCGalleryParsedListener {
         fun onSuccess(document: ArrayList<PostMeta>)
-        fun onFailed(reason: String)
+        fun onFailed()
     }
 
     /**
@@ -64,12 +78,14 @@ class DCWebParser {
         }
     }
 
-    private inner class ParseAsyncTask() : AsyncTask<String, Void, ArrayList<PostMeta>?>() {
+    private inner class ParseAsyncTask(val callback: OnDCGalleryParsedListener) : AsyncTask<String, Void, ArrayList<PostMeta>?>() {
         override fun onPreExecute() {
             super.onPreExecute()
         }
 
         override fun doInBackground(vararg url: String?): ArrayList<PostMeta>? {
+            val postMetaArray = arrayListOf<PostMeta>()
+
             try {
                 val document = Jsoup.connect(url[0]).sslSocketFactory(socketFactory()).get()
                 val posts = document.select("tr.us-post")
@@ -78,29 +94,36 @@ class DCWebParser {
                     val aPost = posts[i]
 
                     val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                    val postDate = formatter.parse(aPost.getElementsByClass("gall_date").text())
+                    val postDate = formatter.parse(aPost.getElementsByClass("gall_date").attr("title"))
 
                     // Make Post Struct.
                     val postMeta = PostMeta(
-                        title = aPost.getElementsByTag("a").text(),             // title
-                        uuid = aPost.getElementsByClass("gall_num").text(),    // uuid
-                        url = aPost.getElementById("a").attr("href"),
+                        title = aPost.getElementsByClass("gall_tit")[0].getElementsByTag("a")[0].text(),          // title
+                        uuid = aPost.getElementsByClass("gall_num").text(),     // uuid
+                        url = DC_GALL_URL + aPost.getElementsByClass("gall_tit")[0].getElementsByTag("a")[0].attr("href"),
                         writer = aPost.getElementsByClass("ub-writer").attr("data-nick"),
                         date = postDate,
                         viewCount = aPost.getElementsByClass("gall_count").text().toInt()
                     )
-
-                    Log.e("Parse", postMeta.title)
+                    // Add new post
+                    postMetaArray.add(postMeta)
                 }
             } catch(ex: Exception) {
                 ex.printStackTrace()
+                postMetaArray.clear()
             }
 
-            return null
+            return postMetaArray
         }
 
         override fun onPostExecute(result: ArrayList<PostMeta>?) {
             super.onPostExecute(result)
+
+            if(result != null) {
+                callback.onSuccess(result)
+            } else {
+                callback.onFailed()
+            }
         }
     }
 
@@ -109,7 +132,7 @@ class DCWebParser {
      * 파싱 작업을 수행 한다.
      */
     fun ParseGallery(targetURL: String, callback: OnDCGalleryParsedListener) {
-        val task = ParseAsyncTask()
+        val task = ParseAsyncTask(callback)
         task.execute(targetURL)
     }
 }
