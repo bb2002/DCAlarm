@@ -4,4 +4,10 @@
     <string name="add_gallery_title">새 갤러리 추가</string>
     <string name="add_gallery_from_uuid">ID 값으로 추가</string>
     <string name="add_gallery_from_web">브라우저로 찾기</string>
+
+    <string name="add_gallery_from_uuid_ex">예) bang_dream</string>
+    <string name="add_gallery_from_uuid_content">예) https://gall.dcinside.com/mgallery/board/lists/?id=bang_dream 갤러리 주소에서 id 인자값을 입력하세요.</string>
+
+    <string name="save">저장</string>
+    <string name="cancel">취소</string>
 </resources>
