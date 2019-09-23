@@ -12,7 +12,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <activity android:name=".views.activities.GalleryBrowserActivity"></activity>
-        <activity android:name=".views.activities.GallertIDActivity" />
+        <activity android:name=".views.activities.GalleryIDActivity" />
         <activity android:name=".views.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

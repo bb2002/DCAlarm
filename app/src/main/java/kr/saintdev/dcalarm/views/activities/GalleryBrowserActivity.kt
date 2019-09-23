@@ -30,7 +30,7 @@ class GalleryBrowserActivity : AppCompatActivity() {
 
             // 해당 URL 의 유효성을 확인 한다.
             val parser = DCWebParser.getInstance()
-            parser.ParseGallery(url, ParserResultListener())
+            parser.startParsing(url, ParserResultListener())
         }
 
         exit.setOnClickListener {

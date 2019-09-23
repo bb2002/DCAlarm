@@ -7,6 +7,11 @@
 
     <string name="add_gallery_from_uuid_ex">예) bang_dream</string>
     <string name="add_gallery_from_uuid_content">예) https://gall.dcinside.com/mgallery/board/lists/?id=bang_dream 갤러리 주소에서 id 인자값을 입력하세요.</string>
+    <string name="is_miner_gallery">마이너 갤러리 입니다.</string>
+
+    <string name="execute_isvalid">유효성 검사 중...</string>
+    <string name="execute_is_unvalid">유효하지 않은 갤러리 입니다.\n개시글이 있는지, 마이너 갤러리인지 다시 확인하세요.</string>
+
 
     <string name="save">저장</string>
     <string name="cancel">취소</string>

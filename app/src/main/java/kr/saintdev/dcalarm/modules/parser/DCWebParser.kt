@@ -14,7 +14,7 @@ import javax.net.ssl.X509TrustManager
 
 /**
  * DC INSIDE WEB PARSER CLASS.
- * USE
+ * HOW TO USE
  *
  *
 val parser = DCWebParser.getInstance()
@@ -32,7 +32,7 @@ override fun onFailed() {
 
 class DCWebParser {
     companion object {
-        var ins: DCWebParser? = null
+        private var ins: DCWebParser? = null
 
         fun getInstance(): DCWebParser {
             if(ins == null) ins = DCWebParser()
@@ -119,7 +119,7 @@ class DCWebParser {
         override fun onPostExecute(result: ArrayList<PostMeta>?) {
             super.onPostExecute(result)
 
-            if(result != null) {
+            if(result != null && result.size != 0) {
                 callback.onSuccess(result)
             } else {
                 callback.onFailed()
@@ -131,7 +131,7 @@ class DCWebParser {
      * @Date 09.16 2019
      * 파싱 작업을 수행 한다.
      */
-    fun ParseGallery(targetURL: String, callback: OnDCGalleryParsedListener) {
+    fun startParsing(targetURL: String, callback: OnDCGalleryParsedListener) {
         val task = ParseAsyncTask(callback)
         task.execute(targetURL)
     }

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private val addGalleryListener = View.OnClickListener {
         when(it.id) {
-            R.id.dc_galladd_fromid -> startActivity(Intent(this, GallertIDActivity::class.java))
+            R.id.dc_galladd_fromid -> startActivity(Intent(this, GalleryIDActivity::class.java))
             R.id.dc_galladd_fromweb -> startActivity(Intent(this, GalleryBrowserActivity::class.java))
         }
     }
