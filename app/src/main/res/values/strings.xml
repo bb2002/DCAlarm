@@ -11,6 +11,8 @@
 
     <string name="execute_isvalid">유효성 검사 중...</string>
     <string name="execute_is_unvalid">유효하지 않은 갤러리 입니다.\n개시글이 있는지, 마이너 갤러리인지 다시 확인하세요.</string>
+    <string name="execute_isvalid_err">유효성 검사 오류</string>
+    <string name="execute_unvalid_err">유효하지 않은 갤러리 입니다.\n다시 시도하거나 다른 갤러리를 선택하세요.</string>
 
 
     <string name="save">저장</string>

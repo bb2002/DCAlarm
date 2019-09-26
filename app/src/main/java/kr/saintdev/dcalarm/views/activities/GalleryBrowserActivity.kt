@@ -10,9 +10,14 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_gallery_browser.*
 import kr.saintdev.dcalarm.R
+import kr.saintdev.dcalarm.modules.DateUtilFunctions
+import kr.saintdev.dcalarm.modules.database.DatabaseManager
+import kr.saintdev.dcalarm.modules.database.SQLQueries
 import kr.saintdev.dcalarm.modules.parser.DCWebParser
 import kr.saintdev.dcalarm.modules.parser.DC_GALL_URL
+import kr.saintdev.dcalarm.modules.parser.GalleryMeta
 import kr.saintdev.dcalarm.modules.parser.PostMeta
+import kr.saintdev.dcalarm.views.alert.openAlert
 
 class GalleryBrowserActivity : AppCompatActivity() {
 
@@ -47,14 +52,22 @@ class GalleryBrowserActivity : AppCompatActivity() {
         }
     }
 
-    private inner class ParserResultListener : DCWebParser.OnDCGalleryParsedListener {
-        override fun onSuccess(document: ArrayList<PostMeta>) {
-            Toast.makeText(applicationContext, "${document.size} 개로, 작동함!", Toast.LENGTH_SHORT).show()
+    private inner class MetaParserResultListener : DCWebParser.OnDCGalleryMetaParsedListener {
+        override fun onSuccess(meta: GalleryMeta) {
+            val database = DatabaseManager.getInstance()
+
+            val pStmt = database.makeInsertQuery(SQLQueries.INSERT_DC_TARGETING_GALLERY, this@GalleryBrowserActivity)
+            pStmt.bindString(1, meta.galleryName)
+            pStmt.bindString(2, meta.galleryID)
+            pStmt.bindString(3, DateUtilFunctions.getNowToString())
+            pStmt.execute()
+
+            Toast.makeText(this@GalleryBrowserActivity, )
         }
 
         override fun onFailed() {
-            Toast.makeText(applicationContext, "안됨!", Toast.LENGTH_SHORT).show()
-
+            // 오류 발생시 경고창 열기
+            R.string.execute_unvalid_err.openAlert(this@GalleryBrowserActivity, resources.getString(R.string.execute_isvalid_err))
         }
     }
 

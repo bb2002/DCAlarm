@@ -17,6 +17,11 @@ data class PostMeta(
     val viewCount: Int
 )
 
+data class GalleryMeta(
+    val galleryName: String,
+    val galleryID: String
+)
+
 //fun Date.str() : String {
 //    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 //    return sdf.format(this)

@@ -2,6 +2,7 @@ package kr.saintdev.dcalarm.modules.parser
 
 import android.os.AsyncTask
 import android.util.Log
+import kr.saintdev.dcalarm.modules.DateUtilFunctions
 import org.jsoup.Jsoup
 import java.security.SecureRandom
 import java.security.cert.CertificateException
@@ -51,6 +52,15 @@ class DCWebParser {
     }
 
     /**
+     * @Date 09.26 2019
+     * 갤러리의 메타 정보를 파싱 하여 가져오는 콜백 리스너
+     */
+    interface OnDCGalleryMetaParsedListener {
+        fun onSuccess(meta: GalleryMeta)
+        fun onFailed()
+    }
+
+    /**
      * @Date 09.16 20190
      * IGNORE SSL CERT.
      */
@@ -93,8 +103,7 @@ class DCWebParser {
                 for(i in 0 until posts.size) {
                     val aPost = posts[i]
 
-                    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                    val postDate = formatter.parse(aPost.getElementsByClass("gall_date").attr("title"))
+
 
                     // Make Post Struct.
                     val postMeta = PostMeta(
@@ -102,7 +111,7 @@ class DCWebParser {
                         uuid = aPost.getElementsByClass("gall_num").text(),     // uuid
                         url = DC_GALL_URL + aPost.getElementsByClass("gall_tit")[0].getElementsByTag("a")[0].attr("href"),
                         writer = aPost.getElementsByClass("ub-writer").attr("data-nick"),
-                        date = postDate,
+                        date = DateUtilFunctions.stringToDate(aPost.getElementsByClass("gall_date").attr("title")),
                         viewCount = aPost.getElementsByClass("gall_count").text().toInt()
                     )
                     // Add new post
@@ -126,6 +135,8 @@ class DCWebParser {
             }
         }
     }
+
+    private inner class ParseDCGalleryName()
 
     /**
      * @Date 09.16 2019
