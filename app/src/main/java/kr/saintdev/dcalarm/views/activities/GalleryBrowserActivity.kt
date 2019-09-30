@@ -35,7 +35,7 @@ class GalleryBrowserActivity : AppCompatActivity() {
 
             // 해당 URL 의 유효성을 확인 한다.
             val parser = DCWebParser.getInstance()
-            parser.startParsing(url, ParserResultListener())
+            parser.startMetaDataParsing(url, MetaParserResultListener())
         }
 
         exit.setOnClickListener {
@@ -62,7 +62,7 @@ class GalleryBrowserActivity : AppCompatActivity() {
             pStmt.bindString(3, DateUtilFunctions.getNowToString())
             pStmt.execute()
 
-            Toast.makeText(this@GalleryBrowserActivity, )
+            Toast.makeText(this@GalleryBrowserActivity, R.string.execute_succ, Toast.LENGTH_SHORT).show();
         }
 
         override fun onFailed() {

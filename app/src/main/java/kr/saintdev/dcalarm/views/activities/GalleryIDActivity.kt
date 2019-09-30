@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_gallert_id.*
 import kr.saintdev.dcalarm.R
 import kr.saintdev.dcalarm.modules.parser.DCWebParser
 import kr.saintdev.dcalarm.modules.parser.DC_GALL_URL
+import kr.saintdev.dcalarm.modules.parser.GalleryMeta
 import kr.saintdev.dcalarm.modules.parser.PostMeta
 import kr.saintdev.dcalarm.views.alert.openAlert
 import kr.saintdev.dcalarm.views.alert.openProgress
@@ -28,16 +29,18 @@ class GalleryIDActivity : AppCompatActivity() {
 
             // URL 에 대한 유효성 검사
             val parser = DCWebParser.getInstance()
-            parser.startParsing(url, onParseCompleteListener)
+            parser.startMetaDataParsing(url, onParseCompleteListener)
 
             this.progressDialogInstance = R.string.execute_isvalid.openProgress(this)
         }
     }
 
     private val onParseCompleteListener =
-        object : DCWebParser.OnDCGalleryParsedListener {
-            override fun onSuccess(document: ArrayList<PostMeta>) {
+        object : DCWebParser.OnDCGalleryMetaParsedListener {
+            override fun onSuccess(meta: GalleryMeta) {
                 progressDialogInstance?.dismiss()
+
+                Toast.makeText(this@GalleryIDActivity, "갤 ID : ${meta.galleryID}, 갤이름 : ${meta.galleryName}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onFailed() {

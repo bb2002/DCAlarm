@@ -1,9 +1,12 @@
 package kr.saintdev.dcalarm.modules.parser
 
+import android.net.Uri
 import android.os.AsyncTask
 import android.util.Log
+import android.widget.Toast
 import kr.saintdev.dcalarm.modules.DateUtilFunctions
 import org.jsoup.Jsoup
+import java.net.URL
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
@@ -103,8 +106,6 @@ class DCWebParser {
                 for(i in 0 until posts.size) {
                     val aPost = posts[i]
 
-
-
                     // Make Post Struct.
                     val postMeta = PostMeta(
                         title = aPost.getElementsByClass("gall_tit")[0].getElementsByTag("a")[0].text(),          // title
@@ -136,7 +137,30 @@ class DCWebParser {
         }
     }
 
-    private inner class ParseDCGalleryName()
+    private inner class ParseGalleryMetaAsyncTask(val callback: OnDCGalleryMetaParsedListener) : AsyncTask<String, Void, GalleryMeta?>() {
+        override fun doInBackground(vararg url: String?): GalleryMeta? {
+            try {
+                val document = Jsoup.connect(url[0]).sslSocketFactory(socketFactory()).get()
+                val urlObj = Uri.parse(url[0])
+
+                // get gallery ID
+                val galleryID = urlObj.getQueryParameter("id")
+                val galleryTitle = document.select("header .page_head .fl h2 a").text()
+
+                return GalleryMeta(galleryTitle, galleryID ?: "")
+            } catch(ex: Exception) { }
+
+            return null
+        }
+
+        override fun onPostExecute(result: GalleryMeta?) {
+            if(result == null) {
+                callback.onFailed()
+            } else {
+                callback.onSuccess(result)
+            }
+        }
+    }
 
     /**
      * @Date 09.16 2019
@@ -144,6 +168,15 @@ class DCWebParser {
      */
     fun startParsing(targetURL: String, callback: OnDCGalleryParsedListener) {
         val task = ParseAsyncTask(callback)
+        task.execute(targetURL)
+    }
+
+    /**
+     * @Date 09.30 2019
+     * 갤러리의 메타 데이터 파싱을 수행 한다.
+     */
+    fun startMetaDataParsing(targetURL: String, callback: OnDCGalleryMetaParsedListener) {
+        val task = ParseGalleryMetaAsyncTask(callback)
         task.execute(targetURL)
     }
 }

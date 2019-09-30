@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteStatement
 import android.provider.ContactsContract
-import kr.saintdev.dcalarm.modules.database.SQLQueries.INSERT_DC_GALLERY_METASET_QUERY
 
 class DatabaseManager {
     private var helper: DatabaseHelper? = null
