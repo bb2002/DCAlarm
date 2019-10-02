@@ -19,7 +19,8 @@ data class PostMeta(
 
 data class GalleryMeta(
     val galleryName: String,
-    val galleryID: String
+    val galleryID: String,
+    val wdate: String?
 )
 
 //fun Date.str() : String {

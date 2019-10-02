@@ -26,6 +26,7 @@ fun Int.openAlert(context: Context, title: String = "메세지") {
 fun String.openProgress(context: Context) : ProgressDialog {
     val dialog = ProgressDialog(context)
     dialog.setMessage(this)
+    dialog.setCancelable(false)
     dialog.show()
 
     return dialog

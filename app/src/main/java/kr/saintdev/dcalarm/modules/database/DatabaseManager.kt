@@ -1,6 +1,7 @@
 package kr.saintdev.dcalarm.modules.database
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteStatement
@@ -30,8 +31,15 @@ class DatabaseManager {
         return writable.compileStatement(query)
     }
 
-    fun executeQuery(stmt: SQLiteStatement) {
-        stmt.execute()
+    fun makeReadQuery(query: String, context: Context) : SQLiteStatement {
+        initHelper(context)
+        val readable = this.helper?.readable()!!
+        return readable.compileStatement(query)
+    }
+
+    fun executeQuery(sql: String, args: Array<String>?) : Cursor {
+        val readable = this.helper?.readable()!!
+        return readable.rawQuery(sql, args)
     }
 
 

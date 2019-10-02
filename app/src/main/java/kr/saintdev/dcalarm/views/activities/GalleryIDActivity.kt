@@ -1,11 +1,14 @@
 package kr.saintdev.dcalarm.views.activities
 
 import android.app.ProgressDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_gallert_id.*
 import kr.saintdev.dcalarm.R
+import kr.saintdev.dcalarm.modules.database.DatabaseManager
+import kr.saintdev.dcalarm.modules.database.Insert
 import kr.saintdev.dcalarm.modules.parser.DCWebParser
 import kr.saintdev.dcalarm.modules.parser.DC_GALL_URL
 import kr.saintdev.dcalarm.modules.parser.GalleryMeta
@@ -40,7 +43,13 @@ class GalleryIDActivity : AppCompatActivity() {
             override fun onSuccess(meta: GalleryMeta) {
                 progressDialogInstance?.dismiss()
 
-                Toast.makeText(this@GalleryIDActivity, "갤 ID : ${meta.galleryID}, 갤이름 : ${meta.galleryName}", Toast.LENGTH_SHORT).show()
+                val dbm = DatabaseManager.getInstance()
+                meta.Insert(dbm, this@GalleryIDActivity)
+
+                // Open activity.
+                startActivity(Intent(this@GalleryIDActivity, GalleryListActivity::class.java))
+
+                finish()
             }
 
             override fun onFailed() {
