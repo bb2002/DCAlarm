@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.activities.GalleryListActivity"></activity>
+        <activity android:name=".views.activities.KeywordActivity"></activity>
+        <activity android:name=".views.activities.GalleryListActivity" />
         <activity android:name=".views.activities.GalleryBrowserActivity" />
         <activity android:name=".views.activities.GalleryIDActivity" />
         <activity android:name=".views.activities.MainActivity">

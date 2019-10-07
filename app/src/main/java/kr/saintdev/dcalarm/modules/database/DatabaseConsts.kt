@@ -20,4 +20,6 @@ object SQLQueries {
     const val INSERT_DC_TARGETING_GALLERY = "INSERT INTO dc_tracking_gallery (gall_name, gall_id, wdate) VALUES(?,?,?);"
 
     const val SELECT_DC_TARGETING_GALLERY_ALL = "SELECT * FROM dc_tracking_gallery ORDER BY _id DESC;"
+
+    const val SELECT_DC_TARGETING_GALLERY_WHERE_ID = "SELECT * FROM dc_tracking_gallery WHERE gall_id = ? ORDER BY _id DESC;"
 }

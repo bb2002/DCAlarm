@@ -8,6 +8,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_gallert_id.*
 import kr.saintdev.dcalarm.R
 import kr.saintdev.dcalarm.modules.database.DatabaseManager
+import kr.saintdev.dcalarm.modules.database.GalleryMetaDatabaseFunc
 import kr.saintdev.dcalarm.modules.database.Insert
 import kr.saintdev.dcalarm.modules.parser.DCWebParser
 import kr.saintdev.dcalarm.modules.parser.DC_GALL_URL
@@ -44,17 +45,27 @@ class GalleryIDActivity : AppCompatActivity() {
                 progressDialogInstance?.dismiss()
 
                 val dbm = DatabaseManager.getInstance()
-                meta.Insert(dbm, this@GalleryIDActivity)
+                val isTargetingGallery = GalleryMetaDatabaseFunc.read(this@GalleryIDActivity, meta).isEmpty()
 
-                // Open activity.
-                startActivity(Intent(this@GalleryIDActivity, GalleryListActivity::class.java))
+                if(isTargetingGallery) {
+                    meta.Insert(dbm, this@GalleryIDActivity)
 
-                finish()
+                    // Open activity.
+                    startActivity(Intent(this@GalleryIDActivity, GalleryListActivity::class.java))
+                    finish()
+                } else {
+                    openTargetedGallery()
+                }
             }
 
             override fun onFailed() {
                 progressDialogInstance?.dismiss()
                 R.string.execute_is_unvalid.openAlert(this@GalleryIDActivity, "Error")
+            }
+
+            // 이미 타겟팅 중인 갤러리 입니다.
+            fun openTargetedGallery() {
+                R.string.targeted_gallery.openAlert(this@GalleryIDActivity, "WARN")
             }
         }
 }

@@ -37,7 +37,8 @@ class DatabaseManager {
         return readable.compileStatement(query)
     }
 
-    fun executeQuery(sql: String, args: Array<String>?) : Cursor {
+    fun executeQuery(sql: String, context: Context, args: Array<String>?) : Cursor {
+        initHelper(context)
         val readable = this.helper?.readable()!!
         return readable.rawQuery(sql, args)
     }

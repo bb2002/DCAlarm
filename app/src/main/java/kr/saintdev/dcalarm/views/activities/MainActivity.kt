@@ -16,12 +16,16 @@ class MainActivity : AppCompatActivity() {
         // Set OnClick Listener
         dc_galladd_fromid.setOnClickListener(addGalleryListener)
         dc_galladd_fromweb.setOnClickListener(addGalleryListener)
+        dc_settings_gallery.setOnClickListener(addGalleryListener)
+        dc_settings_keyword.setOnClickListener(addGalleryListener)
     }
 
     private val addGalleryListener = View.OnClickListener {
         when(it.id) {
             R.id.dc_galladd_fromid -> startActivity(Intent(this, GalleryIDActivity::class.java))
             R.id.dc_galladd_fromweb -> startActivity(Intent(this, GalleryBrowserActivity::class.java))
+            R.id.dc_settings_gallery -> startActivity(Intent(this, GalleryListActivity::class.java))
+            R.id.dc_settings_keyword -> startActivity(Intent(this, KeywordActivity::class.java))
         }
     }
 }

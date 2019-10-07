@@ -7,4 +7,6 @@
     <color name="colorDarkWhite">#b2bec3</color>
     <color name="colorBlue">#0984e3</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorGray">#2c3e50</color>
+    <color name="colorWhiteGray">#95a5a6</color>
 </resources>

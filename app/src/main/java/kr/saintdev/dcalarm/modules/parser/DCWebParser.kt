@@ -11,10 +11,12 @@ import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.text.SimpleDateFormat
+import java.util.*
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
+import kotlin.collections.ArrayList
 
 /**
  * DC INSIDE WEB PARSER CLASS.
@@ -144,11 +146,22 @@ class DCWebParser {
                 val urlObj = Uri.parse(url[0])
 
                 // get gallery ID
-                val galleryID = urlObj.getQueryParameter("id")
+                var galleryID = urlObj.getQueryParameter("id")
+                if(galleryID == null) {
+                    val seg = urlObj.pathSegments
+                    galleryID = seg[seg.size - 1]
+                }
+
                 val galleryTitle = document.select("header .page_head .fl h2 a").text()
 
-                return GalleryMeta(galleryTitle, galleryID ?: "")
-            } catch(ex: Exception) { }
+                if(galleryTitle == null || galleryID == null) {
+                    throw java.lang.Exception("Parser is not working.")
+                }
+
+                return GalleryMeta(galleryTitle, galleryID, DateUtilFunctions.getNowToString())
+            } catch(ex: Exception) {
+                ex.printStackTrace()
+            }
 
             return null
         }
