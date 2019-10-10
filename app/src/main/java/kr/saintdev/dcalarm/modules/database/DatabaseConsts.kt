@@ -17,9 +17,23 @@ object SQLQueries {
             "  gall_id TEXT NOT NULL," +
             "  wdate TEXT NOT NULL);"
 
+    const val CREATE_TABLE_KEYWORD = "CREATE TABLE app_keywords (" +
+            "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+            "keyword TEXT NOT NULL DEFAULT '');"
+
     const val INSERT_DC_TARGETING_GALLERY = "INSERT INTO dc_tracking_gallery (gall_name, gall_id, wdate) VALUES(?,?,?);"
+
+    const val DELETE_DC_TARGETING_GALLERY = "DELETE FROM dc_tracking_gallery WHERE gall_id = ?"
 
     const val SELECT_DC_TARGETING_GALLERY_ALL = "SELECT * FROM dc_tracking_gallery ORDER BY _id DESC;"
 
     const val SELECT_DC_TARGETING_GALLERY_WHERE_ID = "SELECT * FROM dc_tracking_gallery WHERE gall_id = ? ORDER BY _id DESC;"
+
+    const val SELECT_KEYWORD_ALL = "SELECT * FROM app_keywords ORDER BY _id DESC;"
+
+    const val SELECT_KEYWORD_WHERE_ID = "SELECT * FROM app_keywords WHERE _id = ?;"
+
+    const val DELETE_KEYWORD_WHERE_ID = "DELETE FROM app_keywords WHERE _id = ?;"
+
+    const val INSERT_KEYWORD = "INSERT INTO app_keywords (keyword) VALUES(?)"
 }

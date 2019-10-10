@@ -42,6 +42,7 @@
             android:hint="@string/keyword_editor_hint"
             android:layout_weight="1" />
         <Button
+            android:id="@+id/keyword_add_button"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:background="@color/colorBlue"

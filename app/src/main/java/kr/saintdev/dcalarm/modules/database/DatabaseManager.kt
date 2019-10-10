@@ -54,6 +54,7 @@ class DatabaseManager {
         override fun onCreate(p0: SQLiteDatabase?) {
             p0?.execSQL(SQLQueries.CREATE_TABLE_METASET)
             p0?.execSQL(SQLQueries.CREATE_TABLE_TARGETING_GALL)
+            p0?.execSQL(SQLQueries.CREATE_TABLE_KEYWORD)
         }
 
         fun readable() : SQLiteDatabase = this.readableDatabase

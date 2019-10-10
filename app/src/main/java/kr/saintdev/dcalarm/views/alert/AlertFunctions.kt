@@ -38,7 +38,7 @@ fun Int.openProgress(context: Context) : ProgressDialog{
 }
 
 interface OnAlertConfirmClickListener {
-    fun onPostive()
+    fun onPositive()
     fun onNegative()
 }
 
@@ -46,7 +46,7 @@ fun String.openConfirm(context: Context, title: String = "메세지", positiveTe
     val alertDialog = AlertDialog.Builder(context)
     alertDialog.setPositiveButton(positiveText) {
         dialogInterface, _ -> dialogInterface.dismiss()
-        listener.onPostive()
+        listener.onPositive()
     }
     alertDialog.setNegativeButton(negativeText) {
         dialogInterface, _ -> dialogInterface.dismiss()

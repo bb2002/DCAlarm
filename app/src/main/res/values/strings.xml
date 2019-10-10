@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DCAlarm</string>
+    <string name="app_name">디씨 알라미</string>
 
     <string name="add_gallery_title">새 갤러리 추가</string>
     <string name="add_gallery_from_uuid">ID 값으로 추가</string>
@@ -11,6 +11,9 @@
 
     <string name="keyword_title">알림 키워드 관리</string>
     <string name="keyword_editor_hint">추가할 키워드를 입력</string>
+    <string name="keyword_empty">키워드를 입력해주세요.</string>
+    <string name="keyword_delete_q">이 키워드를 삭제할까요?</string>
+    <string name="keyword_exsit">이미 등록된 키워드 입니다.</string>
 
     <string name="add_gallery_from_uuid_ex">예) bang_dream</string>
     <string name="add_gallery_from_uuid_content">예) https://gall.dcinside.com/mgallery/board/lists/?id=bang_dream 갤러리 주소에서 id 인자값을 입력하세요.</string>
@@ -25,6 +28,8 @@
     <string name="execute_succ">갤러리가 등록되었습니다.</string>
 
     <string name="gallery_list_activity_title">등록된 갤러리 리스트</string>
+    <string name="gallery_list_delete_q">이 갤러리를 삭제할까요?</string>
+    <string name="delete_positive">삭제</string>
 
 
     <string name="save">저장</string>

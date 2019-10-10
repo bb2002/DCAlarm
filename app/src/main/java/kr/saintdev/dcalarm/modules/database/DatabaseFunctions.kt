@@ -19,6 +19,12 @@ fun GalleryMeta.Insert(dbm: DatabaseManager, context: Context) {
     pst.executeInsert()
 }
 
+fun GalleryMeta.removeFromDB(dbm: DatabaseManager, context: Context) {
+    val pst = dbm.makeInsertQuery(SQLQueries.DELETE_DC_TARGETING_GALLERY, context)
+    pst.bindString(1, this.galleryID)
+    pst.execute()
+}
+
 object GalleryMetaDatabaseFunc {
     /**
      * @Date 10.02 2019
