@@ -62,6 +62,18 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:textColor="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/testbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorBlue"
+            android:text="test"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorWhite"/>
     </LinearLayout>
 
     <TextView

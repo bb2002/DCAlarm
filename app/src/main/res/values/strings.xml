@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">디씨 알라미</string>
+    <string name="notification_content">새로운 개시글 감시 하는 중...</string>
 
     <string name="add_gallery_title">새 갤러리 추가</string>
     <string name="add_gallery_from_uuid">ID 값으로 추가</string>

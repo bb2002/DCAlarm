@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.saintdev.dcalarm.R
+import kr.saintdev.dcalarm.modules.services.DCAlarmService
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         dc_galladd_fromweb.setOnClickListener(addGalleryListener)
         dc_settings_gallery.setOnClickListener(addGalleryListener)
         dc_settings_keyword.setOnClickListener(addGalleryListener)
+        testbutton.setOnClickListener(addGalleryListener)
     }
 
     private val addGalleryListener = View.OnClickListener {
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity() {
             R.id.dc_galladd_fromweb -> startActivity(Intent(this, GalleryBrowserActivity::class.java))
             R.id.dc_settings_gallery -> startActivity(Intent(this, GalleryListActivity::class.java))
             R.id.dc_settings_keyword -> startActivity(Intent(this, KeywordActivity::class.java))
+            R.id.testbutton -> startService(Intent(this, DCAlarmService::class.java))
         }
     }
 }
