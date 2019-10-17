@@ -32,7 +32,8 @@
     <string name="gallery_list_delete_q">이 갤러리를 삭제할까요?</string>
     <string name="delete_positive">삭제</string>
 
-
     <string name="save">저장</string>
     <string name="cancel">취소</string>
+
+    <string name="gallery_default_url">http://gall.dcinside.com/mgallery/board/lists/?id=</string>
 </resources>

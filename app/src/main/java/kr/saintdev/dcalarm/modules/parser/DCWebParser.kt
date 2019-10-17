@@ -94,39 +94,8 @@ class DCWebParser {
     }
 
     private inner class ParseAsyncTask(val callback: OnDCGalleryParsedListener) : AsyncTask<String, Void, ArrayList<PostMeta>?>() {
-        override fun onPreExecute() {
-            super.onPreExecute()
-        }
 
-        override fun doInBackground(vararg url: String?): ArrayList<PostMeta>? {
-            val postMetaArray = arrayListOf<PostMeta>()
-
-            try {
-                val document = Jsoup.connect(url[0]).sslSocketFactory(socketFactory()).get()
-                val posts = document.select("tr.us-post")
-
-                for(i in 0 until posts.size) {
-                    val aPost = posts[i]
-
-                    // Make Post Struct.
-                    val postMeta = PostMeta(
-                        title = aPost.getElementsByClass("gall_tit")[0].getElementsByTag("a")[0].text(),          // title
-                        uuid = aPost.getElementsByClass("gall_num").text(),     // uuid
-                        url = DC_GALL_URL + aPost.getElementsByClass("gall_tit")[0].getElementsByTag("a")[0].attr("href"),
-                        writer = aPost.getElementsByClass("ub-writer").attr("data-nick"),
-                        date = DateUtilFunctions.stringToDate(aPost.getElementsByClass("gall_date").attr("title")),
-                        viewCount = aPost.getElementsByClass("gall_count").text().toInt()
-                    )
-                    // Add new post
-                    postMetaArray.add(postMeta)
-                }
-            } catch(ex: Exception) {
-                ex.printStackTrace()
-                postMetaArray.clear()
-            }
-
-            return postMetaArray
-        }
+        override fun doInBackground(vararg url: String?): ArrayList<PostMeta>? = parsePostFromDC(url[0] ?: "")
 
         override fun onPostExecute(result: ArrayList<PostMeta>?) {
             super.onPostExecute(result)
@@ -137,6 +106,38 @@ class DCWebParser {
                 callback.onFailed()
             }
         }
+    }
+
+    fun parsePostFromDC(url: String) : ArrayList<PostMeta> {
+        val postMetaArray = arrayListOf<PostMeta>()
+
+        try {
+            if(url.isEmpty()) throw Exception("URL is empty set.")
+
+            val document = Jsoup.connect(url).sslSocketFactory(socketFactory()).get()
+            val posts = document.select("tr.us-post")
+
+            for(i in 0 until posts.size) {
+                val aPost = posts[i]
+
+                // Make Post Struct.
+                val postMeta = PostMeta(
+                    title = aPost.getElementsByClass("gall_tit")[0].getElementsByTag("a")[0].text(),          // title
+                    uuid = aPost.getElementsByClass("gall_num").text(),     // uuid
+                    url = DC_GALL_URL + aPost.getElementsByClass("gall_tit")[0].getElementsByTag("a")[0].attr("href"),
+                    writer = aPost.getElementsByClass("ub-writer").attr("data-nick"),
+                    date = DateUtilFunctions.stringToDate(aPost.getElementsByClass("gall_date").attr("title")),
+                    viewCount = aPost.getElementsByClass("gall_count").text().toInt()
+                )
+                // Add new post
+                postMetaArray.add(postMeta)
+            }
+        } catch(ex: Exception) {
+            ex.printStackTrace()
+            postMetaArray.clear()
+        }
+
+        return postMetaArray
     }
 
     private inner class ParseGalleryMetaAsyncTask(val callback: OnDCGalleryMetaParsedListener) : AsyncTask<String, Void, GalleryMeta?>() {

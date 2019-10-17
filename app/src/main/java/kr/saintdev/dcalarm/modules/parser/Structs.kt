@@ -23,6 +23,11 @@ data class GalleryMeta(
     val wdate: String?
 )
 
+data class NotificationAlarmMeta(
+    val post: PostMeta,
+    val ndate: Date
+)
+
 //fun Date.str() : String {
 //    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 //    return sdf.format(this)

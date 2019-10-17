@@ -5,7 +5,7 @@ import kr.saintdev.dcalarm.modules.database.DatabaseManager
 import kr.saintdev.dcalarm.modules.database.SQLQueries
 
 
-class KeywordManager {
+class KeywordManager private constructor(private val context: Context) {
     companion object {
         private var ins: KeywordManager? = null
 
@@ -18,13 +18,7 @@ class KeywordManager {
         }
     }
 
-    private val context: Context
-    private val databaseManager: DatabaseManager
-
-    private constructor(context: Context) {
-        this.context = context
-        this.databaseManager = DatabaseManager.getInstance()
-    }
+    private val databaseManager: DatabaseManager = DatabaseManager.getInstance()
 
     /**
      * @Date 10.10 2019

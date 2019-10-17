@@ -1,15 +1,14 @@
 package kr.saintdev.dcalarm.modules.database
 
 object SQLQueries {
-    const val CREATE_TABLE_METASET = "CREATE TABLE dc_gallery_metaset (" +
+    const val CREATE_TABLE_NOTIFIALARM = "CREATE TABLE dc_notified_alarms (" +
             "  _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
             "  uuid TEXT NOT NULL," +
             "  url TEXT NOT NULL," +
             "  title TEXT NOT NULL DEFAULT ''," +
             "  writer TEXT NOT NULL DEFAULT ''," +
-            "  wdate TEXT NOT NULL DEFAULT '1970-01-01 00:00:00'," +
-            "  view_count INTEGER NOT NULL DEFAULT 0," +
-            "  is_notified INTEGER NOT NULL DEFAULT 0);"
+            "  post_date TEXT NOT NULL DEFAULT '1970-01-01 00:00:00'," +
+            "  notified_date TEXT NOT NULL DEFAULT '1970-01-01 00:00:00');"
 
     const val CREATE_TABLE_TARGETING_GALL = "CREATE TABLE dc_tracking_gallery (" +
             "  _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
@@ -22,6 +21,10 @@ object SQLQueries {
             "keyword TEXT NOT NULL DEFAULT '');"
 
     const val INSERT_DC_TARGETING_GALLERY = "INSERT INTO dc_tracking_gallery (gall_name, gall_id, wdate) VALUES(?,?,?);"
+
+    const val INSERT_DC_NOTIFIED_ALARM = "INSERT INTO dc_notified_alarms (uuid, url, title, writer, post_date, notified_date) VALUES(?,?,?,?,?,?)"
+
+    const val SELECT_DC_NOTIFIED_ALARMS = "SELECT * FROM dc_notified_alarms ORDER BY _id DESC"
 
     const val DELETE_DC_TARGETING_GALLERY = "DELETE FROM dc_tracking_gallery WHERE gall_id = ?"
 
