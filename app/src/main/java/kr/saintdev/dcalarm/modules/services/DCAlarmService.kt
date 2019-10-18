@@ -1,12 +1,10 @@
 package kr.saintdev.dcalarm.modules.services
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.Service
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -14,31 +12,34 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import kr.saintdev.dcalarm.R
+import kr.saintdev.dcalarm.modules.Networks
 import kr.saintdev.dcalarm.modules.database.GalleryMetaDatabaseFunc
 import kr.saintdev.dcalarm.modules.km.KeywordManager
 import kr.saintdev.dcalarm.modules.notifiarm.NotificationAlarmManager
 import kr.saintdev.dcalarm.modules.parser.DCWebParser
 import kr.saintdev.dcalarm.modules.parser.NotificationAlarmMeta
 import kr.saintdev.dcalarm.modules.parser.PostMeta
+import kr.saintdev.dcalarm.modules.sharedprep.SettingsFunction
 import java.util.*
 
 class DCAlarmService : Service() {
     private var isParserServiceRunning = false
     private var parserThread: DCParserThread? = null
 
-    override fun onCreate() {
-        super.onCreate()
-    }
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startForegroundService()
-
         if(!isParserServiceRunning) {
             parserThread = DCParserThread()
             parserThread!!.start()
+            startForegroundService()
         }
 
         return START_REDELIVER_INTENT
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        isParserServiceRunning = false
+        parserThread?.exit()
     }
 
     override fun onBind(p0: Intent?): IBinder? {
@@ -46,6 +47,8 @@ class DCAlarmService : Service() {
     }
 
     inner class DCParserThread : Thread() {
+        private var isExit = false
+
         override fun run() {
             isParserServiceRunning = true
 
@@ -53,31 +56,33 @@ class DCAlarmService : Service() {
             val notifiAlarmManager = NotificationAlarmManager.getInstance(applicationContext)
 
             while(true) {
-                val trackingGalleries = GalleryMetaDatabaseFunc.readAll(applicationContext)     // 갤러리 목록을 가져온다.
+                if(isExit) break        // 중지되었는지 검사
+                if(!Networks.isLTEMode(applicationContext) || SettingsFunction.isWorkOnDataMode(applicationContext)) {
+                    val trackingGalleries = GalleryMetaDatabaseFunc.readAll(applicationContext)     // 갤러리 목록을 가져온다.
 
-                if(trackingGalleries.isNotEmpty()) {
-                    for(gal in trackingGalleries) {
-                        // 갤러리에 대해 파싱을 시도 한다.
-                        val posts = dcParser.parsePostFromDC(resources.getString(R.string.gallery_default_url) + gal.galleryID)
+                    if(trackingGalleries.isNotEmpty()) {
+                        for(gal in trackingGalleries) {
+                            // 갤러리에 대해 파싱을 시도 한다.
+                            val posts = dcParser.parsePostFromDC(resources.getString(R.string.gallery_default_url) + gal.galleryID)
 
-                        for(post in posts) {
-                            if(isNotifiablePost(post)) {
-                                // 이 포스트는 알릴만한 가치가 있다.
-                                notifiAlarmManager.addNotificationAlarm(NotificationAlarmMeta(post, Date()))
-                                sendNotificationWithNewPost(post)
+                            for(post in posts) {
+                                if(isNotifiablePost(post)) {
+                                    // 이 포스트는 알릴만한 가치가 있다.
+                                    notifiAlarmManager.addNotificationAlarm(NotificationAlarmMeta(post, Date()))
+                                    sendNotificationWithNewPost(post)
+                                }
                             }
                         }
                     }
                 }
 
-                sleep(1000)
+                val delayTime = SettingsFunction.getParseingServiceDelay(applicationContext)
+                sleep(delayTime * 1000L)
             }
-
             isParserServiceRunning = false
-
         }
 
-        fun isNotifiablePost(post: PostMeta) : Boolean {
+        private fun isNotifiablePost(post: PostMeta) : Boolean {
             val keywords = KeywordManager.getInstance(applicationContext).readAllKeywords()
             val notifiAlarms = NotificationAlarmManager.getInstance(applicationContext).getAllNotifiAlarms()
 
@@ -103,6 +108,10 @@ class DCAlarmService : Service() {
             }
 
             return true
+        }
+
+        fun exit() {
+            isExit = true
         }
     }
 
@@ -134,12 +143,17 @@ class DCAlarmService : Service() {
             ""
         }
 
+        val notificationIntent = Intent(Intent.ACTION_VIEW)
+        notificationIntent.data = Uri.parse(newPost.url)
+        val pendIntent = PendingIntent.getActivity(applicationContext, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
         val notifiBuilder = NotificationCompat.Builder(this, channelID)
         val notification = notifiBuilder
             .setSmallIcon(R.drawable.app_icon)
             .setContentTitle(newPost.title)
             .setContentText("${newPost.writer} 님이 작성했습니다.")
             .setAutoCancel(true)
+            .setContentIntent(pendIntent)
             .build()
 
         val notifiManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

@@ -26,6 +26,8 @@ object SQLQueries {
 
     const val SELECT_DC_NOTIFIED_ALARMS = "SELECT * FROM dc_notified_alarms ORDER BY _id DESC"
 
+    const val DELETE_DC_NOTIFIED_ALARMS = "DELETE FROM dc_notified_alarms"
+
     const val DELETE_DC_TARGETING_GALLERY = "DELETE FROM dc_tracking_gallery WHERE gall_id = ?"
 
     const val SELECT_DC_TARGETING_GALLERY_ALL = "SELECT * FROM dc_tracking_gallery ORDER BY _id DESC;"

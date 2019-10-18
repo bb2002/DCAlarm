@@ -1,134 +1,267 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activities.MainActivity">
-
-    <TextView
+    tools:context=".views.activities.MainActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:id="@+id/main_title_add_gallery"
-        android:text="@string/add_gallery_title"
-        android:textSize="16sp"
-        android:textColor="@color/colorAccent"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-    
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/main_title_add_gallery_hr"
-        android:background="@color/colorDarkWhite"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/main_title_add_gallery"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/main_add_gallery_cont"
-        app:layout_constraintTop_toBottomOf="@id/main_title_add_gallery_hr"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
-        <Button
-            android:id="@+id/dc_galladd_fromid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorBlue"
-            android:text="@string/add_gallery_from_uuid"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:textColor="@color/colorWhite"/>
-
-        <Button
-            android:id="@+id/dc_galladd_fromweb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorBlue"
-            android:text="@string/add_gallery_from_web"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorWhite"/>
-
-        <Button
-            android:id="@+id/testbutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorBlue"
-            android:text="test"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorWhite"/>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:id="@+id/main_title_settings"
-        android:text="@string/add_gallery_title"
-        android:textSize="16sp"
-        android:textColor="@color/colorAccent"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/main_add_gallery_cont"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/main_title_settigs_hr"
-        android:background="@color/colorDarkWhite"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/main_title_settings"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/main_title_settigs_hr"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
-        <!-- 갤러리 목록으로 이동 -->
-        <Button
-            android:id="@+id/dc_settings_gallery"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorWhiteGray"
-            android:text="@string/settings_gallery"
-            android:textColor="@color/colorWhite"/>
+            android:layout_height="match_parent"
+            tools:context=".views.activities.MainActivity">
 
-        <!-- 키워드 목록으로 이동 -->
-        <Button
-            android:id="@+id/dc_settings_keyword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorGray"
-            android:text="@string/settings_keyword"
-            android:textColor="@color/colorWhite"/>
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:id="@+id/main_title_add_gallery"
+                android:text="@string/add_gallery_title"
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:layout_margin="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/main_title_add_gallery_hr"
+                android:background="@color/colorDarkWhite"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@id/main_title_add_gallery"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/main_add_gallery_cont"
+                app:layout_constraintTop_toBottomOf="@id/main_title_add_gallery_hr"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+                <Button
+                    android:id="@+id/dc_galladd_fromid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/colorBlue"
+                    android:text="@string/add_gallery_from_uuid"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/colorWhite"/>
+
+                <Button
+                    android:id="@+id/dc_galladd_fromweb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/colorBlue"
+                    android:text="@string/add_gallery_from_web"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/colorWhite"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:id="@+id/main_title_settings"
+                android:text="@string/add_gallery_title"
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:layout_margin="16dp"
+                app:layout_constraintTop_toBottomOf="@id/main_add_gallery_cont"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/main_title_settigs_hr"
+                android:background="@color/colorDarkWhite"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@id/main_title_settings"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/main_settings_cont"
+                app:layout_constraintTop_toBottomOf="@id/main_title_settigs_hr"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+                <!-- 갤러리 목록으로 이동 -->
+                <Button
+                    android:id="@+id/dc_settings_gallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorWhiteGray"
+                    android:text="@string/settings_gallery"
+                    android:textColor="@color/colorWhite"/>
+
+                <!-- 키워드 목록으로 이동 -->
+                <Button
+                    android:id="@+id/dc_settings_keyword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/colorGray"
+                    android:text="@string/settings_keyword"
+                    android:textColor="@color/colorWhite"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:id="@+id/main_service_settings"
+                android:text="@string/service_setup_title"
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:layout_margin="16dp"
+                app:layout_constraintTop_toBottomOf="@id/main_settings_cont"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/main_service_settings_hr"
+                android:background="@color/colorDarkWhite"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@id/main_service_settings"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/main_service_settings_cont"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/main_service_settings_hr"
+                android:layout_margin="16dp"
+                android:stretchColumns="*">
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/service_check_delay"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorBlack"/>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/check_delay_time"
+                        android:layout_alignParentEnd="true"
+                        android:hint="@string/service_check_delay_hint"
+                        android:background="@null"
+                        android:textSize="12sp"
+                        android:inputType="number"
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"/>
+                </TableRow>
+                <TableRow
+                    android:layout_marginBottom="16dp">
+                    <TextView
+                        android:text="@string/service_delay_info"
+                        android:layout_span="2"
+                        android:textColor="@color/colorWhiteGray"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/service_use_lte"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorBlack"/>
+                    <Switch
+                        android:id="@+id/use_data_mode_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:id="@+id/main_notified_alarm_title"
+                android:text="@string/notified_alarm_title"
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:layout_margin="16dp"
+                app:layout_constraintTop_toBottomOf="@id/main_service_settings_cont"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/main_notified_alarm_title_hr"
+                android:background="@color/colorDarkWhite"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@id/main_notified_alarm_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/main_notified_alarm_cont"
+                app:layout_constraintTop_toBottomOf="@id/main_notified_alarm_title_hr"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+                <!-- 갤러리 목록으로 이동 -->
+                <Button
+                    android:id="@+id/notified_alarm_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:layout_weight="1"
+                    android:text="@string/notified_alarm_title"
+                    android:textColor="@color/colorWhite"
+                    android:layout_margin="8dp"/>
+
+                <Button
+                    android:id="@+id/notified_alarm_clear_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:text="@string/notified_alarm_clear"
+                    android:textColor="@color/colorWhite"
+                    android:layout_margin="8dp"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</FrameLayout>

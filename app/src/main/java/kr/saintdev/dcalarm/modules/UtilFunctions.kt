@@ -1,5 +1,7 @@
 package kr.saintdev.dcalarm.modules
 
+import android.content.Context
+import android.net.ConnectivityManager
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,7 +17,14 @@ object DateUtilFunctions {
     fun stringToDate(str: String) = str.toDate()
 
     fun getNowToString(): String = formatter.format(Date())
+}
 
+object Networks {
+    fun isLTEMode(context: Context) : Boolean {
+        val connManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = connManager.activeNetworkInfo
+        return netInfo?.type == ConnectivityManager.TYPE_MOBILE
+    }
 }
 
 fun String.toDate() = formatter.parse(this) ?: Date()

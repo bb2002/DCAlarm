@@ -3,7 +3,10 @@
     package="kr.saintdev.dcalarm">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,11 +16,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.activities.KeywordActivity"></activity>
-        <activity android:name=".views.activities.GalleryListActivity" />
-        <activity android:name=".views.activities.GalleryBrowserActivity" />
-        <activity android:name=".views.activities.GalleryIDActivity" />
-        <activity android:name=".views.activities.MainActivity">
+        <activity android:name=".views.activities.NotifiedAlarmActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".views.activities.KeywordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".views.activities.GalleryListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".views.activities.GalleryBrowserActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".views.activities.GalleryIDActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".views.activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,6 +36,12 @@
         </activity>
 
         <service android:name=".modules.services.DCAlarmService" />
+
+        <receiver android:name=".modules.brdcaster.BootupBroadcastRecv">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

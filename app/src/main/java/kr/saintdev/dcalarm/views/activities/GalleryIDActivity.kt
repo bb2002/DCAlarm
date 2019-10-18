@@ -10,10 +10,7 @@ import kr.saintdev.dcalarm.R
 import kr.saintdev.dcalarm.modules.database.DatabaseManager
 import kr.saintdev.dcalarm.modules.database.GalleryMetaDatabaseFunc
 import kr.saintdev.dcalarm.modules.database.Insert
-import kr.saintdev.dcalarm.modules.parser.DCWebParser
-import kr.saintdev.dcalarm.modules.parser.DC_GALL_URL
-import kr.saintdev.dcalarm.modules.parser.GalleryMeta
-import kr.saintdev.dcalarm.modules.parser.PostMeta
+import kr.saintdev.dcalarm.modules.parser.*
 import kr.saintdev.dcalarm.views.alert.openAlert
 import kr.saintdev.dcalarm.views.alert.openProgress
 
@@ -44,17 +41,27 @@ class GalleryIDActivity : AppCompatActivity() {
             override fun onSuccess(meta: GalleryMeta) {
                 progressDialogInstance?.dismiss()
 
-                val dbm = DatabaseManager.getInstance()
-                val isTargetingGallery = GalleryMetaDatabaseFunc.read(this@GalleryIDActivity, meta).isEmpty()
+                if(meta.isValid()) {
+                    val dbm = DatabaseManager.getInstance()
+                    val isTargetingGallery =
+                        GalleryMetaDatabaseFunc.read(this@GalleryIDActivity, meta).isEmpty()
 
-                if(isTargetingGallery) {
-                    meta.Insert(dbm, this@GalleryIDActivity)
+                    if (isTargetingGallery) {
+                        meta.Insert(dbm, this@GalleryIDActivity)
 
-                    // Open activity.
-                    startActivity(Intent(this@GalleryIDActivity, GalleryListActivity::class.java))
-                    finish()
+                        // Open activity.
+                        startActivity(
+                            Intent(
+                                this@GalleryIDActivity,
+                                GalleryListActivity::class.java
+                            )
+                        )
+                        finish()
+                    } else {
+                        openTargetedGallery()
+                    }
                 } else {
-                    openTargetedGallery()
+                    onFailed()
                 }
             }
 

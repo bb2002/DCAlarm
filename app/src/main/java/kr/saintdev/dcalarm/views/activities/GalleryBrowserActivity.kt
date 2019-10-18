@@ -16,10 +16,7 @@ import kr.saintdev.dcalarm.modules.DateUtilFunctions
 import kr.saintdev.dcalarm.modules.database.DatabaseManager
 import kr.saintdev.dcalarm.modules.database.GalleryMetaDatabaseFunc
 import kr.saintdev.dcalarm.modules.database.SQLQueries
-import kr.saintdev.dcalarm.modules.parser.DCWebParser
-import kr.saintdev.dcalarm.modules.parser.DC_GALL_URL
-import kr.saintdev.dcalarm.modules.parser.GalleryMeta
-import kr.saintdev.dcalarm.modules.parser.PostMeta
+import kr.saintdev.dcalarm.modules.parser.*
 import kr.saintdev.dcalarm.views.alert.openAlert
 import kr.saintdev.dcalarm.views.alert.openProgress
 
@@ -61,32 +58,42 @@ class GalleryBrowserActivity : AppCompatActivity() {
         override fun onSuccess(meta: GalleryMeta) {
             progressDialogInstance?.dismiss()
 
-            val database = DatabaseManager.getInstance()
+            if(meta.isValid()) {
+                val database = DatabaseManager.getInstance()
 
-            // 중복 검사
-            val bTargetedGallery = GalleryMetaDatabaseFunc.read(this@GalleryBrowserActivity, meta).isEmpty()
+                // 중복 검사
+                val bTargetedGallery =
+                    GalleryMetaDatabaseFunc.read(this@GalleryBrowserActivity, meta).isEmpty()
 
-            if(bTargetedGallery) {
-                val pStmt = database.makeInsertQuery(
-                    SQLQueries.INSERT_DC_TARGETING_GALLERY,
-                    this@GalleryBrowserActivity
-                )
-                pStmt.bindString(1, meta.galleryName)
-                pStmt.bindString(2, meta.galleryID)
-                pStmt.bindString(3, DateUtilFunctions.getNowToString())
-                pStmt.execute()
+                if (bTargetedGallery) {
+                    val pStmt = database.makeInsertQuery(
+                        SQLQueries.INSERT_DC_TARGETING_GALLERY,
+                        this@GalleryBrowserActivity
+                    )
+                    pStmt.bindString(1, meta.galleryName)
+                    pStmt.bindString(2, meta.galleryID)
+                    pStmt.bindString(3, DateUtilFunctions.getNowToString())
+                    pStmt.execute()
 
-                Toast.makeText(
-                    this@GalleryBrowserActivity,
-                    R.string.execute_succ,
-                    Toast.LENGTH_SHORT
-                ).show()
+                    Toast.makeText(
+                        this@GalleryBrowserActivity,
+                        R.string.execute_succ,
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                // Open activity.
-                startActivity(Intent(this@GalleryBrowserActivity, GalleryListActivity::class.java))
-                finish()
+                    // Open activity.
+                    startActivity(
+                        Intent(
+                            this@GalleryBrowserActivity,
+                            GalleryListActivity::class.java
+                        )
+                    )
+                    finish()
+                } else {
+                    targetedGalleryAleryOpen()
+                }
             } else {
-                targetedGalleryAleryOpen()
+                onFailed()
             }
         }
 

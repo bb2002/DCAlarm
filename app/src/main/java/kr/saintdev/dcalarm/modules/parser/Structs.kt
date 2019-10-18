@@ -23,6 +23,8 @@ data class GalleryMeta(
     val wdate: String?
 )
 
+fun GalleryMeta.isValid() = this.galleryID.isNotEmpty() && this.galleryName.isNotEmpty()
+
 data class NotificationAlarmMeta(
     val post: PostMeta,
     val ndate: Date

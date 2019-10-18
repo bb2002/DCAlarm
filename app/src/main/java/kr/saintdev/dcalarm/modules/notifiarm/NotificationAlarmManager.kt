@@ -63,4 +63,12 @@ class NotificationAlarmManager private constructor(private val context: Context)
 
         stmt.execute()
     }
+
+    /**
+     * @Date 10.18 2019
+     * Clear all notification alarms.
+     */
+    fun removeAllNotificationAlarm() {
+        databaseManager.makeReadQuery(SQLQueries.DELETE_DC_NOTIFIED_ALARMS, this.context).execute()
+    }
 }
